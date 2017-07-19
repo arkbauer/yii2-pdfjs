@@ -1,7 +1,7 @@
 Yii2 PDFJS
 ==========
 
-PDF.js upadted to version 1.7.225 (latest stabele as of 19.07.2017)
+PDF.js updated to version 1.7.225 (latest stabele as of 19.07.2017)
 
 Yii2 PDFJS bundle of [PDF.js](https://mozilla.github.io/pdf.js/) plugin. PDF.js Portable Document Format (PDF) viewer.
 
