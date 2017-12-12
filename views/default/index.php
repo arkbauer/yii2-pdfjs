@@ -18,6 +18,7 @@ PDFJS.workerSrc = '{$bundle->baseUrl}/build/pdf.worker.js';
 ";
 $this->registerJs($pdjsConfig,View::POS_HEAD);
 $this->registerJs($js);
+$this->registerCss($viewerStyle);
  ?>
 
 <div id="outerContainer">

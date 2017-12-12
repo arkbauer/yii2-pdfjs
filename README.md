@@ -1,9 +1,32 @@
 Yii2 PDFJS
 ==========
 
-PDF.js updated to version 1.7.225 (latest stabele as of 19.07.2017)
-
 Yii2 PDFJS bundle of [PDF.js](https://mozilla.github.io/pdf.js/) plugin. PDF.js Portable Document Format (PDF) viewer.
+
+Updates
+--------
+Can now define custom CSS for the viewer, e.g. for the white background use:
+```php
+<?= \yii2assets\pdfjs\PdfJs::widget([
+    'url'=> "somefile.pdf",
+    'options' => [
+         'viewerStyle' => "body {background-color: #fff;}",
+    ]
+]); ?>
+```
+
+Can now define additional URL params ([More info](https://github.com/mozilla/pdf.js/wiki/Viewer-options) ), e.g. to zoom to page width by default use:
+```php
+<?= \yii2assets\pdfjs\PdfJs::widget([
+    'url'=> "somefile.pdf",
+    'options' => [
+         'additionalUrlParams' => "#zoom=page-width",
+    ]
+]); ?>
+```
+
+PDF.js updated to version 1.7.225 (latest stable as of 19.07.2017)
+
 
 Installation
 ------------
