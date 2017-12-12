@@ -12,6 +12,7 @@ use yii\web\Controller;
 class DefaultController extends Controller
 {
     public $layout = 'main';
+
     /**
      * Renders the index view for the module
      * @return string
@@ -20,22 +21,24 @@ class DefaultController extends Controller
     {
         $buttons = Yii::$app->getModule('pdfjs')->buttons;
         $waterMark = Yii::$app->getModule('pdfjs')->waterMark;
-        if(Yii::$app->request->getIsPost()){
+        $viewerStyle = '';
+        if (Yii::$app->request->getIsPost()) {
+            $widgitButtonConfig = Yii::$app->request->post();
+            $viewerStyle = $widgitButtonConfig['viewerStyle'];
+            if (isset(Yii::$app->request->csrfParam)) {
+                unset($widgitButtonConfig[Yii::$app->request->csrfParam]);
+            }
 
-          $widgitButtonConfig =  Yii::$app->request->post();
-          if(isset(Yii::$app->request->csrfParam)){
-            unset($widgitButtonConfig[Yii::$app->request->csrfParam]);
-          }
-
-          foreach ($widgitButtonConfig as $key => $value) {
-            $widgitButtonConfig[$key] = trim($value) == '0' ? false:true;
-          }
-          $buttons = array_merge($buttons,$widgitButtonConfig);
+            foreach ($widgitButtonConfig as $key => $value) {
+                $widgitButtonConfig[$key] = trim($value) == '0' ? false : true;
+            }
+            $buttons = array_merge($buttons, $widgitButtonConfig);
         }
 
-        return $this->render('index',[
-          'buttons'=>$buttons,
-          'waterMark'=>$waterMark
+        return $this->render('index', [
+            'buttons'     => $buttons,
+            'waterMark'   => $waterMark,
+            'viewerStyle' => $viewerStyle,
         ]);
     }
 }

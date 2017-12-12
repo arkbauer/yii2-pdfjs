@@ -15,6 +15,7 @@ var WATERMARK_TEXT_COLOR = '".$waterMark['color']."';
 ";
 $this->registerJs($pdjsConfig,View::POS_HEAD);
 $this->registerJs($js);
+$this->registerCss($viewerStyle);
  ?>
 
  <div id="outerContainer">

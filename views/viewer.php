@@ -21,6 +21,7 @@ $this->registerJs('
 <?php foreach ($buttons as $btn => $value):?>
 <?= $value == false ? Html::hiddenInput($btn,0) : null;?>
 <?php endforeach; ?>
+<?= Html::hiddenInput('viewerStyle', $options['viewerStyle']) ?>
 <?php ActiveForm::end() ?>
 
  <?= Html::tag('iframe','',ArrayHelper::merge([
