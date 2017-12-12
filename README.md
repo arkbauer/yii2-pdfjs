@@ -1,11 +1,32 @@
 Yii2 PDFJS
 ==========
 
-TEST
-
-[![Latest Stable Version](https://poser.pugx.org/yii2assets/yii2-pdfjs/v/stable)](https://packagist.org/packages/yii2assets/yii2-pdfjs) [![Total Downloads](https://poser.pugx.org/yii2assets/yii2-pdfjs/downloads)](https://packagist.org/packages/yii2assets/yii2-pdfjs) [![Latest Unstable Version](https://poser.pugx.org/yii2assets/yii2-pdfjs/v/unstable)](https://packagist.org/packages/yii2assets/yii2-pdfjs) [![License](https://poser.pugx.org/yii2assets/yii2-pdfjs/license)](https://packagist.org/packages/yii2assets/yii2-pdfjs) [![composer.lock](https://poser.pugx.org/yii2assets/yii2-pdfjs/composerlock)](https://packagist.org/packages/yii2assets/yii2-pdfjs)
-
 Yii2 PDFJS bundle of [PDF.js](https://mozilla.github.io/pdf.js/) plugin. PDF.js Portable Document Format (PDF) viewer.
+
+Updates
+--------
+Can now define custom CSS for the viewer, e.g. for the white background use:
+```php
+<?= \yii2assets\pdfjs\PdfJs::widget([
+    'url'=> "somefile.pdf",
+    'options' => [
+         'viewerStyle' => "body {background-color: #fff;}",
+    ]
+]); ?>
+```
+
+Can now define additional URL params ([More info](https://github.com/mozilla/pdf.js/wiki/Viewer-options) ), e.g. to zoom to page width by default use:
+```php
+<?= \yii2assets\pdfjs\PdfJs::widget([
+    'url'=> "somefile.pdf",
+    'options' => [
+         'additionalUrlParams' => "#zoom=page-width",
+    ]
+]); ?>
+```
+
+PDF.js updated to version 1.7.225 (latest stable as of 19.07.2017)
+
 
 Installation
 ------------

@@ -16,7 +16,7 @@ $this->registerJs('
       'class' => 'form-horizontal',
       'target'=> 'pdfjs-'.$id
     ],
-    'action'=>$url
+    'action'=>$url . $options['additionalUrlParams']
 ]) ?>
 <?php foreach ($buttons as $btn => $value):?>
 <?= $value == false ? Html::hiddenInput($btn,0) : null;?>
