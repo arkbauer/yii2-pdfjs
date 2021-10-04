@@ -7294,6 +7294,8 @@ var pdfjsWebLibs;
          window.removeEventListener('afterprint', windowAfterPrintListener);
 
          // Closes the PDF.js print progress (and destroys printing resources)
+         //   Using 1000ms (original was 20ms) as an extra safety measure,
+         //   it was mentioned in https://github.com/mozilla/pdf.js/issues/7597#issuecomment-259781803
          setTimeout(resolve, 1000);
         };
 
