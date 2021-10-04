@@ -7252,8 +7252,73 @@ var pdfjsWebLibs;
         resolve();
         return;
        }
-       print.call(window);
-       setTimeout(resolve, 20);
+
+       (function () {
+        // We use 3 types of ways to detect when window.print() was closed
+        // 1. window.matchMedia('print') onchange event (doesn't exist on Firefox)
+        // 2. window onafterprint event (fix for Firefox)
+        // 3. window.print() blocking call (for browsers that have window.print as a blocking call)
+
+        var printingClosed = false;
+        var afterPrint;
+
+        var printQuery = window.matchMedia ? window.matchMedia('print') : null;
+
+        var printQueryChangeListener = function (event) {
+         if (!event.matches) {
+          // Print window was closed
+          afterPrint('printQueryChangeListener');
+         }
+        };
+
+        var windowAfterPrintListener = function () {
+         afterPrint('windowAfterPrintListener');
+        };
+
+        afterPrint = function (whichEventCalledThis) {
+         console.log('afterPrint was called from:', whichEventCalledThis, {});
+
+         if (printingClosed) return;
+         printingClosed = true;
+
+         console.log('afterPrint: resolve()', {});
+
+         if (printQuery) {
+          if (printQuery.removeEventListener) {
+           printQuery.removeEventListener('change', printQueryChangeListener);
+          } else {
+           // iOS safari has only this deprecated thing :)
+           printQuery.removeListener(printQueryChangeListener);
+          }
+         }
+         window.removeEventListener('afterprint', windowAfterPrintListener);
+
+         // Closes the PDF.js print progress (and destroys printing resources)
+         setTimeout(resolve, 1000);
+        };
+
+        if (printQuery) {
+         if (printQuery.addEventListener) {
+          printQuery.addEventListener('change', printQueryChangeListener);
+         } else {
+          // iOS safari has only this deprecated thing :)
+          printQuery.addListener(printQueryChangeListener);
+         }
+        }
+        // Firefox has issues with window.matchMedia('print'), that's why we add also this as fallback.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=774398
+        window.addEventListener('afterprint', windowAfterPrintListener);
+
+        var printStartTime = new Date();
+
+        print.call(window);
+
+        var printElapsedTime = new Date() - printStartTime;
+        if (printElapsedTime > 250) {
+         afterPrint('window.print() blocking call');
+        }
+       })();
+
       }.bind(this), 0);
      }.bind(this));
     },
